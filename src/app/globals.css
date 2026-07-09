@@ -1,0 +1,186 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------- Fonts ---
+   Vodka Sans — display/titles/callouts only (one weight).
+   Switzer — everything else (UI, body, labels).                          */
+
+@font-face {
+  font-family: "Vodka Sans";
+  src: url("/fonts/fonnts.com-vodkasans-regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Switzer";
+  src: url("/fonts/SWITZER-OTF/Switzer-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Switzer";
+  src: url("/fonts/SWITZER-OTF/Switzer-Medium.otf") format("opentype");
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Switzer";
+  src: url("/fonts/SWITZER-OTF/Switzer-Semibold.otf") format("opentype");
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Switzer";
+  src: url("/fonts/SWITZER-OTF/Switzer-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Switzer";
+  src: url("/fonts/SWITZER-OTF/Switzer-Extrabold.otf") format("opentype");
+  font-weight: 800;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Switzer";
+  src: url("/fonts/SWITZER-OTF/Switzer-Black.otf") format("opentype");
+  font-weight: 900;
+  font-display: swap;
+}
+
+/* --------------------------------------------------------------- Theme ---
+   Fixed palette from design.md. White + Black are the workhorses;
+   Red/Yellow/Green/Blue are accents only. Two derived neutrals each.     */
+
+@theme {
+  /* Core accents */
+  --color-uno-red: #ea6833;
+  --color-uno-yellow: #f8c368;
+  --color-uno-green: #97b16c;
+  --color-uno-blue: #3595c6;
+
+  /* Workhorses */
+  --color-uno-cream: #f1e7dc; /* White */
+  --color-uno-ink: #2b2a27; /* Black */
+
+  /* Derived neutrals — depth/hierarchy only, never a core substitute */
+  --color-uno-white1: #e8dccc; /* sunken surfaces, dividers */
+  --color-uno-white2: #ddccb6; /* deeper recess / pressed */
+  --color-uno-ink1: #454340; /* secondary text, icons */
+  --color-uno-ink2: #5e5b56; /* tertiary text, disabled */
+
+  --font-display: "Vodka Sans", ui-rounded, system-ui, sans-serif;
+  --font-body: "Switzer", ui-sans-serif, system-ui, sans-serif;
+
+  /* Single shape reference: the card asset's corner radius, used
+     consistently across every surface (buttons, panels, modals, inputs). */
+  --radius-card: 22px;
+}
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  background-color: var(--color-uno-cream);
+  color: var(--color-uno-ink);
+  font-family: var(--font-body);
+  min-height: 100vh;
+}
+
+/* Playing-card look. The card art is 660x1029 (ratio ~1.559, taller than a
+   flat 2:3), so we DON'T force an aspect-ratio or clip: the <Card> image drives
+   its own height (height:auto) and its own proportional corner radius. Forcing
+   `aspect-ratio: 2/3` + `overflow: hidden` here previously sheared ~6% off the
+   bottom of every front card. */
+.card-face {
+  background: transparent;
+}
+
+/* Active-turn indicator — a soft ring pulse in the ink workhorse color. */
+@keyframes pulse-turn {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(43, 42, 39, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(43, 42, 39, 0);
+  }
+}
+
+.turn-glow {
+  animation: pulse-turn 1.6s infinite;
+}
+
+/* ---------------------------------------------------------- Game table ---
+   Playful, restrained motion for the redesigned /room table.            */
+
+/* A freshly played card lands on the pile with a little settle. */
+@keyframes card-drop {
+  0% {
+    transform: translateY(-46px) scale(1.14) rotate(var(--rot, 0deg));
+    opacity: 0;
+  }
+  70% {
+    transform: translateY(4px) scale(0.99) rotate(var(--rot, 0deg));
+  }
+  100% {
+    transform: translateY(0) scale(1) rotate(var(--rot, 0deg));
+    opacity: 1;
+  }
+}
+.animate-card-drop {
+  animation: card-drop 360ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* The UNO! button wiggles to beg for a tap when a call is available. */
+@keyframes uno-wiggle {
+  0%,
+  100% {
+    transform: rotate(-3deg) scale(1);
+  }
+  50% {
+    transform: rotate(3deg) scale(1.05);
+  }
+}
+.uno-wiggle {
+  animation: uno-wiggle 0.9s ease-in-out infinite;
+}
+
+/* Current player's avatar does a soft breathing bob. */
+@keyframes seat-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+.seat-bob {
+  animation: seat-bob 1.8s ease-in-out infinite;
+}
+
+/* The two direction arrows chasing around the star. */
+@keyframes arrow-drift {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+.arrow-drift {
+  animation: arrow-drift 2.4s ease-in-out infinite;
+}
+
+/* Soft, layered card shadow used across piles and hands. */
+.card-shadow {
+  filter: drop-shadow(0 6px 10px rgba(43, 42, 39, 0.22))
+    drop-shadow(0 2px 3px rgba(43, 42, 39, 0.12));
+}
+.card-shadow-sm {
+  filter: drop-shadow(0 3px 5px rgba(43, 42, 39, 0.2));
+}
