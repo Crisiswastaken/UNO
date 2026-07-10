@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { type CSSProperties, useState } from "react";
 import { Card } from "../components/ui/Card";
 import { setName } from "../lib/identity";
 
@@ -31,30 +31,33 @@ export default function Landing() {
         className="object-cover -z-10 select-none pointer-events-none"
       />
 
-      {/* Decorative cards */}
-      <Card
+      {/* Decorative cards — a slow, staggered idle drift keeps the hero alive */}
+      <DecorCard
         src="/home/plus4.png"
-        alt=""
-        width={220}
-        height={340}
-        priority
-        className="hidden md:block absolute left-[7%] top-[10%] w-[9rem] lg:w-[11rem] h-auto -rotate-6 drop-shadow-[0_10px_20px_rgba(43,42,39,0.28)] select-none pointer-events-none"
+        place="left-[7%] top-[10%]"
+        size="w-[9rem] lg:w-[11rem]"
+        rot={-6}
+        dur={7}
+        float={-16}
+        delay={0}
       />
-      <Card
+      <DecorCard
         src="/cards/wild.png"
-        alt=""
-        width={220}
-        height={340}
-        priority
-        className="hidden md:block absolute left-[6%] bottom-[8%] w-[8.5rem] lg:w-[10.5rem] h-auto -rotate-3 drop-shadow-[0_10px_20px_rgba(43,42,39,0.28)] select-none pointer-events-none"
+        place="left-[6%] bottom-[8%]"
+        size="w-[8.5rem] lg:w-[10.5rem]"
+        rot={-3}
+        dur={6.4}
+        float={-13}
+        delay={0.9}
       />
-      <Card
+      <DecorCard
         src="/home/uno-back.png"
-        alt=""
-        width={220}
-        height={340}
-        priority
-        className="hidden md:block absolute right-[7%] top-1/2 -translate-y-1/2 w-[9rem] lg:w-[11rem] h-auto rotate-6 drop-shadow-[0_10px_20px_rgba(43,42,39,0.28)] select-none pointer-events-none"
+        place="right-[7%] top-[16%]"
+        size="w-[9rem] lg:w-[11rem]"
+        rot={6}
+        dur={7.6}
+        float={-15}
+        delay={0.4}
       />
 
       {/* Center column */}
@@ -130,6 +133,58 @@ export default function Landing() {
         )}
       </div>
     </main>
+  );
+}
+
+/**
+ * A single scattered landing-page card. The wrapper owns placement + tilt
+ * (`place`, `rot`); the inner element owns the slow vertical idle drift so the
+ * two transforms never fight. Motion is disabled under prefers-reduced-motion
+ * via the `.decor-float` rule in globals.css.
+ */
+function DecorCard({
+  src,
+  place,
+  size,
+  rot,
+  dur,
+  float,
+  delay,
+}: {
+  src: string;
+  place: string;
+  size: string;
+  rot: number;
+  dur: number;
+  float: number;
+  delay: number;
+}) {
+  return (
+    <div
+      className={`hidden md:block absolute ${place} select-none pointer-events-none`}
+      style={{ transform: `rotate(${rot}deg)` }}
+    >
+      <div
+        className="decor-float"
+        style={
+          {
+            "--dur": `${dur}s`,
+            "--float": `${float}px`,
+            animationDelay: `${delay}s`,
+          } as CSSProperties
+        }
+      >
+        <Card
+          src={src}
+          alt=""
+          width={220}
+          height={340}
+          priority
+          rounded={false}
+          className={`${size} h-auto rounded-[10px] decor-shadow`}
+        />
+      </div>
+    </div>
   );
 }
 

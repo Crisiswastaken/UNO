@@ -35,7 +35,7 @@ export function Card({ rounded = true, className, style, ...props }: CardProps) 
       {...props}
       style={radius !== undefined ? { ...style, borderRadius: radius } : style}
       className={[
-        rounded && w === undefined && "rounded-[14px]",
+        rounded && w === undefined && "rounded-[12px]",
         className,
       ]
         .filter(Boolean)

@@ -345,3 +345,36 @@ textarea,
 .focal-halo {
   animation: focal-breathe 3.4s ease-in-out infinite;
 }
+
+/* --------------------------------------------------------- Home decor ---
+   The scattered decorative cards on the landing page drift in a slow, lazy
+   idle bob so the hero feels alive without asking for attention. Rotation
+   lives on the wrapper; the float only nudges the card vertically. Each card
+   gets its own duration/offset (set inline) so they never sync up. */
+@keyframes decor-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(var(--float, -14px));
+  }
+}
+.decor-float {
+  animation: decor-float var(--dur, 6s) ease-in-out infinite;
+}
+
+/* Layered depth for the landing decor cards — a tight contact shadow plus two
+   softer, wider casts so each card reads as clearly lifted off the backdrop.
+   drop-shadow (not box-shadow) so the blur follows the rounded card art. */
+.decor-shadow {
+  filter: drop-shadow(0 2px 3px rgba(43, 42, 39, 0.2))
+    drop-shadow(0 10px 16px rgba(43, 42, 39, 0.24))
+    drop-shadow(0 24px 36px rgba(43, 42, 39, 0.26));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .decor-float {
+    animation: none;
+  }
+}
