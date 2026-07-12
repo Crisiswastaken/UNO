@@ -465,11 +465,11 @@ textarea,
 }
 
 /* ------------------------------------------------------- Mobile gate ---
-   The game is desktop-first and not responsive yet, so on phones / small
-   touch screens we replace it with a "desktop only" notice. Hidden by
-   default; shown only for coarse-pointer (no-hover) devices or very narrow
-   viewports. Sits above everything (splash included) via a max z-index.
-   See src/components/MobileGate.tsx. */
+   The game is desktop-first and not responsive yet, so on phone-sized
+   viewports we replace it with a "screen too small" notice. Hidden by
+   default; shown only below ~480px (portrait phones). Tablets, laptops,
+   and touch-screen PCs stay playable. Sits above everything (splash
+   included) via a max z-index. See src/components/MobileGate.tsx. */
 .mobile-gate {
   display: none;
   position: fixed;
@@ -483,12 +483,7 @@ textarea,
   text-align: center;
   cursor: auto;
 }
-@media (hover: none) and (pointer: coarse) {
-  .mobile-gate {
-    display: flex;
-  }
-}
-@media (max-width: 640px) {
+@media (max-width: 480px) {
   .mobile-gate {
     display: flex;
   }
