@@ -20,6 +20,16 @@ rejoin their exact seat. Play 2–4 players per room over a shareable code.
 - ✨ A hand-drawn "groovy" art style, a first-visit loading intro, and playful
   table motion.
 
+## Game Stills
+
+<img width="3132" height="1762" alt="Frame" src="https://github.com/user-attachments/assets/87c4dff0-cfca-4150-9899-42bc89ae6099" />
+
+<img width="3517" height="1770" alt="image 3" src="https://github.com/user-attachments/assets/b17c28a6-fec6-4b28-be4b-ac4c8e08fb04" />
+
+<img width="3511" height="1771" alt="image 5" src="https://github.com/user-attachments/assets/f9433c4b-565a-40e3-bc0f-514ac8b86a8d" />
+
+<img width="3511" height="1777" alt="image 8" src="https://github.com/user-attachments/assets/395ddec5-215e-47ca-8ab8-caf85c5e8327" />
+
 ## Tech stack
 
 | Layer | Choice |
