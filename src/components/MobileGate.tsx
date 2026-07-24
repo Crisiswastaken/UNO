@@ -1,29 +1,32 @@
 /**
- * Small-screen gate. The game is a desktop-first, non-responsive layout
- * (hover affordances, fixed table), so on phone-sized viewports we show a
- * full-screen notice instead of the broken UI. Tablets and laptops are allowed.
+ * Landscape rotate prompt for phones.
  *
- * Visibility is pure CSS (`.mobile-gate` in globals.css, toggled by media
- * queries), so there's no JS detection, no hydration flash, and it sits above
- * everything — including the splash — via a max z-index. Remove once the app
- * has a real responsive layout.
+ * The phone experience (mobile lobby + `MobileGameTable`) is designed for
+ * portrait. When a phone is turned to landscape the board would be squashed, so
+ * we overlay a "rotate to portrait" notice instead. Larger devices (tablets,
+ * laptops, desktops) use the desktop layout in any orientation and never see
+ * this.
+ *
+ * Visibility is pure CSS (`.rotate-prompt` in globals.css, toggled by a
+ * phone-landscape media query), so there's no JS detection, no hydration flash,
+ * and it sits above everything — including the splash — via a max z-index.
  */
-export function MobileGate() {
+export function RotatePrompt() {
   return (
-    <div className="mobile-gate" role="alertdialog" aria-label="Screen too small">
-      <div className="mobile-gate__panel">
+    <div className="rotate-prompt" role="alertdialog" aria-label="Rotate your device">
+      <div className="rotate-prompt__panel">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/home/uno-wordmark.png"
           alt="UNO"
           width={556}
           height={330}
-          className="mobile-gate__logo"
+          className="rotate-prompt__logo"
         />
-        <h1 className="mobile-gate__title">Screen too small</h1>
-        <p className="mobile-gate__text">
-          Custom UNO isn&apos;t ready for phone screens yet. Open it on a
-          tablet, laptop, or desktop to play.
+        <h1 className="rotate-prompt__title">Rotate your phone</h1>
+        <p className="rotate-prompt__text">
+          Custom UNO is built for portrait on phones. Turn your device upright to
+          play.
         </p>
       </div>
     </div>

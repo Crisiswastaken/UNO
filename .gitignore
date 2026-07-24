@@ -11,6 +11,10 @@ next-env.d.ts
 
 # Local env files (keep .env.example tracked)
 .env*.local
+.env
+
+# Local scratch / notes — not part of the app
+issues.py
 
 # OS
 .DS_Store

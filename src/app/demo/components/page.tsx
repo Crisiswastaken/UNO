@@ -44,6 +44,13 @@ const SECTIONS: Section[] = [
     ],
   },
   {
+    title: "Mobile table",
+    blurb: "The purpose-built portrait phone board (MobileGameTable) with mock in-round data, framed at phone size. 2-player: one opponent up top, your hand a swipeable carousel along the bottom.",
+    items: [
+      { label: "Mobile — 2 player", note: "portrait phone · your turn · big hand", src: "/demo/part/mobile-2p", w: 390, h: 844 },
+    ],
+  },
+  {
     title: "In-round popups",
     blurb: "Overlays that appear during play.",
     items: [

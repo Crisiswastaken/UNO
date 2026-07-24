@@ -50,14 +50,14 @@ export function Lobby({
       />
 
       {/* A frosted sheet lifts the lobby cleanly off the busy background. */}
-      <div className="w-full max-w-md bg-uno-cream/80 backdrop-blur-2xl rounded-[28px] border-2 border-white/50 shadow-[0_20px_60px_rgba(43,42,39,0.25)] p-6">
-        <h1 className="font-display text-5xl mb-1">Lobby</h1>
+      <div className="w-full max-w-md bg-uno-cream/80 backdrop-blur-2xl rounded-[28px] border-2 border-white/50 shadow-[0_20px_60px_rgba(43,42,39,0.25)] p-5 sm:p-6">
+        <h1 className="font-display text-4xl sm:text-5xl mb-1">Lobby</h1>
 
-        <div className="bg-uno-white1 border-2 border-uno-ink/10 rounded-card p-5 mb-6 text-center">
+        <div className="bg-uno-white1 border-2 border-uno-ink/10 rounded-card p-4 sm:p-5 mb-6 text-center">
           <div className="text-xs uppercase tracking-widest font-semibold text-uno-ink2">
             Room code
           </div>
-          <div className="font-display text-5xl tracking-[0.1em] my-2">
+          <div className="font-display text-4xl sm:text-5xl tracking-[0.1em] my-2">
             {view.roomCode}
           </div>
           <button

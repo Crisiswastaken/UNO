@@ -26,9 +26,9 @@ export default function CreatePage() {
   };
 
   return (
-    <main className="min-h-screen flex flex-col items-center py-12 px-4">
+    <main className="min-h-screen flex flex-col items-center py-8 sm:py-12 px-4">
       <div className="w-full max-w-2xl">
-        <h1 className="font-display text-5xl mb-2">Create Room</h1>
+        <h1 className="font-display text-4xl sm:text-5xl mb-2">Create Room</h1>
 
         <h2 className="text-lg font-bold mb-4">House Rules</h2>
 

@@ -24,11 +24,11 @@ export function RoundEnd({
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center p-6">
-      <div className="bg-uno-white1 border-2 border-uno-ink/10 rounded-card p-8 w-full max-w-md text-center">
+      <div className="bg-uno-white1 border-2 border-uno-ink/10 rounded-card p-6 sm:p-8 w-full max-w-md text-center">
         <div className="text-uno-ink1 text-sm font-bold uppercase tracking-widest mb-2">
           {isMatchEnd ? "Match Over" : "Round Over"}
         </div>
-        <h1 className="font-display text-5xl mb-6">
+        <h1 className="font-display text-4xl sm:text-5xl mb-6">
           {winner ? `${winner.displayName} wins` : "Round complete"}
         </h1>
 

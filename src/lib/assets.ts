@@ -30,7 +30,11 @@ const HOME_ASSETS = [
   "/home/uno-wordmark.png",
 ];
 
-const GAME_ASSETS = ["/game/background.png", "/game/uno-logo.png"];
+const GAME_ASSETS = [
+  "/game/background.png",
+  "/game/mobile-background.png",
+  "/game/uno-logo.png",
+];
 
 const AVATAR_ASSETS = [
   "/avatars/AV1.png",

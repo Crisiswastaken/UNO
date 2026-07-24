@@ -5,9 +5,11 @@ import { DEFAULT_CONFIG } from "../engine/types";
 import type { ClientMessage } from "../shared/protocol";
 import { ColorPicker } from "./ColorPicker";
 import { GameTable } from "./GameTable";
+import { MobileGameTable } from "./MobileGameTable";
 import { Lobby } from "./Lobby";
 import { NameGate } from "./NameGate";
 import { RoundEnd } from "./RoundEnd";
+import { Card as Img } from "./ui/Card";
 import { Spinner } from "./ui/Spinner";
 
 /* --------------------------------------------------------------------------
@@ -200,6 +202,99 @@ export function PartView({ name }: { name: string }) {
           })}
           send={noop}
         />
+      );
+    }
+
+    case "mobile-2p": {
+      // The purpose-built portrait phone board for a 2-player game (one
+      // opponent up top, your hand along the bottom). A deliberately large
+      // hand exercises the swipeable carousel. Rendered over the mobile star
+      // background so the piles land where the art expects.
+      const roster: PlayerView[] = [
+        player({ playerId: "p1", displayName: "You", seat: 0, handCount: 11 }),
+        player({ playerId: "p2", displayName: "Shine", seat: 1, handCount: 10 }),
+      ];
+      // Two 4s (red + yellow) both open against the red 4 on top, so tapping one
+      // enters the stacking selection and surfaces the Play button.
+      const hand: ClientView["yourHand"] = [
+        { uid: "h1", color: "red", value: "4" },
+        { uid: "h2", color: "yellow", value: "4" },
+        { uid: "h3", color: "blue", value: "0" },
+        { uid: "h4", color: "green", value: "9" },
+        { uid: "h5", color: "red", value: "skip" },
+        { uid: "h6", color: "yellow", value: "5" },
+        { uid: "h7", color: "green", value: "6" },
+        { uid: "h8", color: "blue", value: "reverse" },
+        { uid: "h9", color: null, value: "wild" },
+        { uid: "h10", color: "red", value: "1" },
+        { uid: "h11", color: null, value: "wild_draw4" },
+      ];
+      return (
+        <div className="fixed inset-0">
+          <div aria-hidden className="fixed inset-0 -z-10 overflow-hidden bg-uno-cream">
+            <Img src="/game/mobile-background.png" alt="" fill rounded={false} priority sizes="100vw" className="object-cover" />
+          </div>
+          <MobileGameTable
+            view={view({
+              phase: "in_round",
+              players: roster,
+              currentSeat: 0,
+              activeColor: "red",
+              discardTop: { uid: "d0", color: "red", value: "4" },
+              yourHand: hand,
+              pendingDraw: 0,
+              turnEndsAt: Date.now() + 22_000,
+              config: { ...DEFAULT_CONFIG, stacking: true },
+            })}
+            send={noop}
+          />
+        </div>
+      );
+    }
+
+    case "mobile-4p": {
+      // The portrait phone board for a 4-player game: MobileGameTable lays the
+      // three opponents out as left / top / right seats (via orientationFor),
+      // with the local player's hand along the bottom. One opponent is down to a
+      // single card and catchable, surfacing the "Catch!" button.
+      const roster: PlayerView[] = [
+        player({ playerId: "p1", displayName: "You", seat: 0, handCount: 8 }),
+        player({ playerId: "p2", displayName: "Shine", seat: 1, handCount: 5 }),
+        player({ playerId: "p3", displayName: "Leo", seat: 2, handCount: 7 }),
+        player({ playerId: "p4", displayName: "Maya", seat: 3, handCount: 1, isCatchable: true }),
+      ];
+      // Two 7s (blue + green) both open against the blue 7 on top, so tapping one
+      // enters the stacking selection and surfaces the Play button; plus a wild.
+      const hand: ClientView["yourHand"] = [
+        { uid: "h1", color: "blue", value: "7" },
+        { uid: "h2", color: "green", value: "7" },
+        { uid: "h3", color: "red", value: "2" },
+        { uid: "h4", color: "yellow", value: "skip" },
+        { uid: "h5", color: "green", value: "4" },
+        { uid: "h6", color: "blue", value: "reverse" },
+        { uid: "h7", color: null, value: "wild" },
+        { uid: "h8", color: "red", value: "9" },
+      ];
+      return (
+        <div className="fixed inset-0">
+          <div aria-hidden className="fixed inset-0 -z-10 overflow-hidden bg-uno-cream">
+            <Img src="/game/mobile-background.png" alt="" fill rounded={false} priority sizes="100vw" className="object-cover" />
+          </div>
+          <MobileGameTable
+            view={view({
+              phase: "in_round",
+              players: roster,
+              currentSeat: 0,
+              activeColor: "blue",
+              discardTop: { uid: "d0", color: "blue", value: "7" },
+              yourHand: hand,
+              pendingDraw: 0,
+              turnEndsAt: Date.now() + 22_000,
+              config: { ...DEFAULT_CONFIG, stacking: true },
+            })}
+            send={noop}
+          />
+        </div>
       );
     }
 

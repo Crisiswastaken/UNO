@@ -2,11 +2,13 @@
 
 import { useRoom } from "../hooks/useRoom";
 import { useGameSounds } from "../hooks/useGameSounds";
+import { useIsPhone } from "../hooks/useIsPhone";
 import { Card } from "./ui/Card";
 import { Spinner } from "./ui/Spinner";
 import { setName } from "../lib/identity";
 import { useGameStore } from "../store/gameStore";
 import { GameTable } from "./GameTable";
+import { MobileGameTable } from "./MobileGameTable";
 import { Lobby } from "./Lobby";
 import { NameGate } from "./NameGate";
 import { RoundEnd } from "./RoundEnd";
@@ -17,11 +19,11 @@ import { Toasts } from "./Toasts";
  * scalloped star sits dead-center), so it's rendered edge-to-edge with no
  * blur or wash — the centered star is where the played cards land.
  */
-function RoomBackground() {
+function RoomBackground({ isPhone }: { isPhone: boolean }) {
   return (
     <div aria-hidden className="fixed inset-0 -z-10 overflow-hidden bg-uno-cream">
       <Card
-        src="/game/background.png"
+        src={isPhone ? "/game/mobile-background.png" : "/game/background.png"}
         alt=""
         fill
         rounded={false}
@@ -36,6 +38,7 @@ function RoomBackground() {
 export function RoomClient({ code }: { code: string }) {
   const { send, needsName, submitName } = useRoom(code);
   const { view, connected } = useGameStore();
+  const isPhone = useIsPhone();
 
   // Derive playful sound cues (opponent plays, specials, your turn, wins) by
   // diffing successive snapshots. Called unconditionally before any early
@@ -74,14 +77,19 @@ export function RoomClient({ code }: { code: string }) {
     <>
       {/* The groovy table art belongs to the play area only; the lobby brings
           its own calmer backdrop. */}
-      {view.phase !== "lobby" && <RoomBackground />}
+      {view.phase !== "lobby" && <RoomBackground isPhone={isPhone} />}
       {!connected && (
         <div className="fixed top-0 inset-x-0 z-50 bg-uno-red text-uno-cream text-center text-sm font-semibold py-1">
           reconnecting…
         </div>
       )}
       {view.phase === "lobby" && <Lobby view={view} send={send} />}
-      {view.phase === "in_round" && <GameTable view={view} send={send} />}
+      {view.phase === "in_round" &&
+        (isPhone ? (
+          <MobileGameTable view={view} send={send} />
+        ) : (
+          <GameTable view={view} send={send} />
+        ))}
       {(view.phase === "round_end" || view.phase === "match_end") && (
         <RoundEnd view={view} send={send} />
       )}
